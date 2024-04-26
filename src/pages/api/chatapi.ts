@@ -12,6 +12,10 @@ export default async function handler(
     const data = { data: req.body };
     let sql = await generateSQL(data);
     res.status(200).json({ message: sql || 'No Response' });
+  } else {
+    res.setHeader("Allow", ["POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+  
   }
 }
 
