@@ -66,13 +66,13 @@ export default function Home() {
 
   return (
     <main
-      className={`${inter.className} h-screen`}
+      className={`${inter.className} h-screen bg-gradient-to-br from-blue-500 to-blue-700 text-white`}
     >
-      <div>
-        <h1 className="text-4xl font-bold text-center mx-auto my-12">
-          Power of AI Team
+      
+        <h1 className="text-4xl font-bold text-center mx-auto py-12">
+          Power of AI Team - Menadevs GenAI Hackathon
         </h1>
-        <div className="flex flex-row gap-12 w-fit mx-auto">
+        <div className="flex flex-row gap-12 w-fit mx-auto text-black">
         <motion.div 
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0}}
@@ -99,13 +99,12 @@ export default function Home() {
           </ul>
         </motion.div>
         </div>
-        <form id="chat_form" onSubmit={handleSubmit} className="w-fit mx-auto">
-          <label htmlFor="text_input" className="block text-left mt-6">Ask a question:</label>
+        <form id="chat_form" onSubmit={handleSubmit} className="w-fit mx-auto text-black">
+          <label htmlFor="text_input" className="block text-left mt-6 text-white">Ask a question:</label>
           <input id="text_input" className="w-[500px] bg-white rounded-lg shadow-lg mt-2 mx-auto h-12 p-2"/>
             <button type="submit" className="bg-blue-500 text-white rounded-lg shadow-lg h-12 w-24 ml-2">Send</button>
           
         </form>
-      </div>
     </main>
   );
 }

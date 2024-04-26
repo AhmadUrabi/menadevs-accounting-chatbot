@@ -21,7 +21,7 @@ export default async function handler(
 
 async function generateSQL(input: any){
     const data = { data: `
-    You are a database developed who is tasked on generating an SQL statement based on the following NLP prompt:
+    You are a database developer who is tasked on generating an SQL statement based on the following NLP prompt:
     "${input.data}"
 
     You are also given the following schema:
@@ -41,8 +41,14 @@ async function generateSQL(input: any){
 
     The following conditions are also true:
     The current date is april 26 2024
+    
+    If the prompt is not clear, please ask for reprompt, and use a style that is easy to understand without technical terms.
 
-    Give me an SQL statement that returns the data required from the prompt.
+    Give me an SQL statement that returns the data required from the prompt, and make sure that the reply starts with SQL:.
+    Don't allow any delete statement
+    Don't allow any SQL injection vulnerabilities in the SQL statement.
+    Make sure to use the correct table and column names, and use the correct SQL syntax, also dont allow any major security vulnerabilities in the SQL statement.
+    
     `}
     var ans;
     await axios({
@@ -79,5 +85,5 @@ async function generateSQL(input: any){
           }, 1000);
         });
       });
-        return ans;
+    return ans;
 }
