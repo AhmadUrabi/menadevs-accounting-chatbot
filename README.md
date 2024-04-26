@@ -1,3 +1,11 @@
+## Description
+This is the "Power of AI team" submission for the 2024 MENAdevs GenAI Hackathon. The team consists of Ahmad Urabi, Rahaf Jaber, and Dania Ahmad.
+
+You must include the following API keys:
+AIXPLAIN_API_KEY: This is the API key from aiXplain
+Postgres DB keys: We are using vercel's postgres Storage, so it comes with about 27 env values to connect it to the project. Unless you are able to host both the project and the storage on the vercel, you won't be able to run this application modifying the source code.
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

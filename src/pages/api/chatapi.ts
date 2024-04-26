@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-const axios = require("axios");
 import { Client, sql } from "@vercel/postgres";
+const axios = require("axios");
+
+// TODO Add easter eggs for the jury :)
 
 type ResponseData = {
   message: string;
@@ -118,7 +120,7 @@ async function generateSQL(input: any): Promise<string> {
 }
 
 
-// TODO handle query / insert / update / delete
+
 
 async function fetchData(mysql: string) {
     mysql = mysql.replace("SQL:\n", "");
@@ -144,7 +146,8 @@ async function parseData(res: string, org_prompt: string){
     
     ${org_prompt}
 
-    Write a short summary of the data in a way that is easy to understand without any technical terms and matches the requirements of the original prompt. Make sure that the reply is clear based off the original prompt.
+    Write a short summary of the data in a way that is easy to understand without any technical terms and matches the requirements of the original prompt. Make sure that the reply is clear based off the original prompt. Make the writing sound as if you are a junior accountant giving an answer to an executive with no technical background.
+    If the answer is shown in a table format, you can write a summary of the table instead of the table itself.
     `}
     var ans;
     await axios({
