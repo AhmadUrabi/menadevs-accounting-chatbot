@@ -63,6 +63,9 @@ export default function Home() {
     console.log("Form submitted");
   }
 
+  function handleClear() {
+    setMessages([]);
+  }
 
   return (
     <main
@@ -73,12 +76,14 @@ export default function Home() {
           Power of AI Team - Menadevs GenAI Hackathon
         </h1>
         <div className="flex flex-row gap-12 w-fit mx-auto text-black">
+        {messages.length > 0 && <button onClick={handleClear} className="bg-white text-blue-500 rounded-lg shadow-lg h-12 w-24 absolute top-2 right-4">Clear</button>}
         <motion.div 
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0}}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="w-[500px] h-[500px] bg-white rounded-lg shadow-lg p-6 overflow-scroll">
+          className="w-[500px] h-[500px] bg-white rounded-lg shadow-lg p-6 overflow-scroll relative">
+            
           {messages.map((message, index) => (
               <div key={index} className="text-left">
                {message.sender}: {message.message}
