@@ -22,11 +22,12 @@ export default async function handler(
             res.status(200).json({ message: sql.split("ERROR:")[1] });
             return;
         }
+        
 
         let data = await fetchData(sql);
         console.log(data);
         if (data) {
-            let resData = await parseData(JSON.stringify(data), req.body.data);
+            let resData = await parseData(JSON.stringify(data), req.body);
             res.status(200).json({ message: resData || 'Error Parsing Data' });
         } else {
             res.status(200).json({ message: 'No matching data found' });
@@ -73,12 +74,13 @@ async function generateSQL(input: any): Promise<string> {
     The following conditions are also true:
     The current date is april 26 2024
 
-    The query should also get the names of the accounts instead of their numbers
+    In case the question asks for information that isn't strictly numerical, The query should also get the names of the accounts instead of their numbers
 
     ONLY if the prompt is clear, and provides specific instructions, you can generate an SQL statement based on the prompt
     
     Give me an SQL statement that returns the data required from the prompt, and make sure that the reply only contains sql code without any prefix or suffix.
     Don't allow any delete statement
+    Make sure it is a valid SQL statement that can be run on the schema provided
     Only Use the tables and columns provided in the schema, nothing else
     Don't allow any SQL injection vulnerabilities in the SQL statement.
     Make sure to use the correct table and column names, and use the correct SQL syntax, also dont allow any major security vulnerabilities in the SQL statement.
@@ -87,7 +89,7 @@ async function generateSQL(input: any): Promise<string> {
     var ans = "";
     await axios({
         method: "post",
-        url: "https://models.aixplain.com/api/v1/execute/640b517694bf816d35a59125",
+        url: "https://models.aixplain.com/api/v1/execute/654a42a36eb5634a236f5eb1",
         data: data,
         headers: {
           "x-api-key": process.env.AIXPLAIN_API_KEY,
@@ -126,7 +128,8 @@ async function generateSQL(input: any): Promise<string> {
 
 
 async function fetchData(mysql: string) {
-    mysql = mysql.replace("SQL:\n", "");
+    mysql = mysql.replace("```sql\n", "");
+    mysql = mysql.replace("```", "");
     mysql = mysql.replace("\n", " ");
     
     try{
@@ -140,6 +143,7 @@ async function fetchData(mysql: string) {
 }
 
 async function parseData(res: string, org_prompt: string){
+    console.log(org_prompt)
     let data = {data : `
     You are an AI tasked with summaryzing and explaining the following data:
 
@@ -156,7 +160,7 @@ async function parseData(res: string, org_prompt: string){
     var ans;
     await axios({
         method: "post",
-        url: "https://models.aixplain.com/api/v1/execute/640b517694bf816d35a59125",
+        url: "https://models.aixplain.com/api/v1/execute/654a42a36eb5634a236f5eb1",
         data: data,
         headers: {
           "x-api-key": process.env.AIXPLAIN_API_KEY,
