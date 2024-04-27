@@ -74,6 +74,8 @@ async function generateSQL(input: any): Promise<string> {
     The following conditions are also true:
     The current date is april 26 2024
 
+    Unless the prompt specifies needing future information, only retrieve data that is dated up to the current date
+
     In case the question asks for information that isn't strictly numerical, The query should also get the names of the accounts instead of their numbers
 
     ONLY if the prompt is clear, and provides specific instructions, you can generate an SQL statement based on the prompt
@@ -152,6 +154,8 @@ async function parseData(res: string, org_prompt: string){
     ,which was retrieved using an sql query from the following NLP prompt:
     
     ${org_prompt}
+    If the prompt was a data manipulation command, return affermation that the command was successful.g
+    if the data is empty, or is just square brackets, return a message indicating so relevant to the original prompt
 
     Write a short summary of the table in a way that is easy to understand without any technical terms and matches the requirements of the original prompt. Make sure that the reply is clear based off the original prompt. Make the writing sound as if you are a junior accountant giving an answer to an executive with no technical background.
     Give very short concise answers only answering the question asked in the prompt.
