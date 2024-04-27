@@ -9,7 +9,7 @@ export default function Home() {
 
   const examples = [
     "What is the total amount of transactions?",
-    "What are the biggest transactions of the past month?",
+    "What is the biggest transaction?",
     "What is the average transaction amount in the past year?",
   ]
 
@@ -38,12 +38,9 @@ export default function Home() {
       
     console.log(data)
     // Add User message to the chat
-    setMessages([...messages, { sender: "User", message: data }]);
-    setMessages([...messages, { sender: "User", message: data }]);
-    setMessages([...messages, { sender: "User", message: data as string }]);
-
-    // Add temporary message to the chat
-    setMessages([...messages, { sender: "Bot", message: "Thinking..." }]);
+    setMessages([...messages, { sender: "User", message: data }, { sender: "Bot", message: "Thinking..." }]);
+    
+    
 
     // Send the data to the server
     const res = fetch("/api/chatapi", {
@@ -53,10 +50,12 @@ export default function Home() {
         console.log(res.message);
         
         // Clear temporary message
-        setMessages(messages.slice(0, messages.length - 1));
-
-        var newMsg = { sender: "Bot", message: res.message };
-        setMessages([...messages, newMsg]);
+        
+        setTimeout(()=>{
+          var newMsg = { sender: "Bot", message: res.message };
+          setMessages(messages.slice(0, messages.length));
+          setMessages([...messages, newMsg]);
+        },100)
       }
     }
       );
@@ -85,8 +84,8 @@ export default function Home() {
           className="w-[500px] h-[500px] bg-white rounded-lg shadow-lg p-6 overflow-scroll relative">
             
           {messages.map((message, index) => (
-              <div key={index} className="text-left">
-               {message.sender}: {message.message}
+              <div key={index} className="text-left mt-1">
+               <span className="font-bold">{message.sender}</span>: {message.message}
               </div>
             ))}
         </motion.div>

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Client, sql } from "@vercel/postgres";
+import { sql } from "@vercel/postgres";
 const axios = require("axios");
 
 // TODO Add easter eggs for the jury :)
@@ -53,7 +53,7 @@ async function generateSQL(input: any): Promise<string> {
 
     Anything else should return an error message that starts with ERROR:.
 
-    You are also given the following schema:
+    You are also given the following Postgres schema:
     TABLE Account (
         account_id SERIAL PRIMARY KEY,
         account_name TEXT,
@@ -73,10 +73,13 @@ async function generateSQL(input: any): Promise<string> {
     The following conditions are also true:
     The current date is april 26 2024
 
+    The query should also get the names of the accounts instead of their numbers
+
     ONLY if the prompt is clear, and provides specific instructions, you can generate an SQL statement based on the prompt
     
     Give me an SQL statement that returns the data required from the prompt, and make sure that the reply only contains sql code without any prefix or suffix.
     Don't allow any delete statement
+    Only Use the tables and columns provided in the schema, nothing else
     Don't allow any SQL injection vulnerabilities in the SQL statement.
     Make sure to use the correct table and column names, and use the correct SQL syntax, also dont allow any major security vulnerabilities in the SQL statement.
     
@@ -146,7 +149,8 @@ async function parseData(res: string, org_prompt: string){
     
     ${org_prompt}
 
-    Write a short summary of the data in a way that is easy to understand without any technical terms and matches the requirements of the original prompt. Make sure that the reply is clear based off the original prompt. Make the writing sound as if you are a junior accountant giving an answer to an executive with no technical background.
+    Write a short summary of the table in a way that is easy to understand without any technical terms and matches the requirements of the original prompt. Make sure that the reply is clear based off the original prompt. Make the writing sound as if you are a junior accountant giving an answer to an executive with no technical background.
+    Give very short concise answers only answering the question asked in the prompt.
     If the answer is shown in a table format, you can write a summary of the table instead of the table itself.
     `}
     var ans;
