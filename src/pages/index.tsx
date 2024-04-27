@@ -53,8 +53,8 @@ export default function Home() {
         
         setTimeout(()=>{
           var newMsg = { sender: "Bot", message: res.message };
-          setMessages(messages.slice(0, messages.length));
-          setMessages([...messages, newMsg]);
+          // Hacky way to include the prompt
+          setMessages([...messages, { sender: "User", message: data }, newMsg]);
         },100)
       }
     }
